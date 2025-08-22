@@ -1,9 +1,11 @@
-package com.example.Mini.product;
+package com.example.Mini.service;
 
+import com.example.Mini.entity.Product;
 import com.example.Mini.file.FileCloudinaryService;
-import com.example.Mini.product.productDTO.requset.CreateProductRequest;
-import com.example.Mini.product.productDTO.requset.UpdateProductRequest;
-import com.example.Mini.product.productDTO.response.ProductResponse;
+import com.example.Mini.repository.ProductRepository;
+import com.example.Mini.request.CreateProductRequest;
+import com.example.Mini.request.UpdateProductRequest;
+import com.example.Mini.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
