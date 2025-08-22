@@ -1,4 +1,4 @@
-package com.example.Mini.product.productDTO.requset;
+package com.example.Mini.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

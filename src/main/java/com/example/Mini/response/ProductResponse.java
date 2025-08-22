@@ -1,20 +1,18 @@
-package com.example.Mini.product.productDTO.requset;
+package com.example.Mini.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateProductRequest {
-    private Integer productId;
+public class ProductResponse {
+    private Integer id;
     private String productName;
     private Long price;
     private Long quantity;
-    private MultipartFile file;
-    private String folder;
+    private String imageUrl;
 }

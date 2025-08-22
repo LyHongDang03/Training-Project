@@ -1,8 +1,9 @@
-package com.example.Mini.product;
+package com.example.Mini.controller;
 
-import com.example.Mini.product.productDTO.requset.CreateProductRequest;
-import com.example.Mini.product.productDTO.requset.UpdateProductRequest;
-import com.example.Mini.product.productDTO.response.ProductResponse;
+import com.example.Mini.request.CreateProductRequest;
+import com.example.Mini.request.UpdateProductRequest;
+import com.example.Mini.response.ProductResponse;
+import com.example.Mini.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

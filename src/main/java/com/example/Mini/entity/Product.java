@@ -1,4 +1,4 @@
-package com.example.Mini.user;
+package com.example.Mini.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,10 +12,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String username;
-    private String password;
+    private String productName;
+    private Long price;
+    private Long quantity;
+    private String imageUrl;
 }
