@@ -11,9 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateProductRequest {
-    private String productName;
+    private String name;
     private Long price;
     private Long quantity;
-    private MultipartFile file;
-    private String folder;
+    private String imageURL;
 }
