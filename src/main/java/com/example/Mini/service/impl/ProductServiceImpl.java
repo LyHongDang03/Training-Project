@@ -1,21 +1,24 @@
-package com.example.Mini.product;
+package com.example.Mini.service.impl;
 
-import com.example.Mini.product.productDTO.requset.CreateProductRequest;
-import com.example.Mini.product.productDTO.response.ProductResponse;
+import com.example.Mini.Entity.Product;
+import com.example.Mini.repository.ProductRepository;
+import com.example.Mini.request.CreateProductRequest;
+import com.example.Mini.response.ProductResponse;
+import com.example.Mini.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService {
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     //Create product
-    public ProductResponse createProduct(CreateProductRequest createProductRequest) throws IOException {
+    @Override
+    public ProductResponse createProduct(CreateProductRequest createProductRequest){
 
         Product product = new Product();
 
@@ -36,7 +39,8 @@ public class ProductService {
         return productResponse;
     }
     //Get list products
-    public List<ProductResponse> getAllProducts() throws IOException {
+    @Override
+    public List<ProductResponse> getAllProducts(){
         var products = productRepository.findAll();
         List<ProductResponse> productResponses = new ArrayList<>();
         for (var product : products) {

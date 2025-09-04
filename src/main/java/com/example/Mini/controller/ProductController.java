@@ -1,7 +1,8 @@
-package com.example.Mini.product;
+package com.example.Mini.controller;
 
-import com.example.Mini.product.productDTO.requset.CreateProductRequest;
-import com.example.Mini.product.productDTO.response.ProductResponse;
+import com.example.Mini.request.CreateProductRequest;
+import com.example.Mini.response.ProductResponse;
+import com.example.Mini.service.impl.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +14,17 @@ import java.util.List;
 @RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
-    private  final ProductService productService;
+    private  final ProductServiceImpl productServiceImpl;
 
     @PostMapping()
     public ResponseEntity<ProductResponse> createProduct(@RequestBody CreateProductRequest request) throws IOException {
-        var result = productService.createProduct(request);
+        var result = productServiceImpl.createProduct(request);
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping()
     public ResponseEntity<List<ProductResponse>> findAll() throws IOException {
-        var result = productService.getAllProducts();
+        var result = productServiceImpl.getAllProducts();
         return ResponseEntity.ok().body(result);
     }
 }
