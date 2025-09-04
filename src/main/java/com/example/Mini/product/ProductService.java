@@ -1,8 +1,6 @@
 package com.example.Mini.product;
 
-import com.example.Mini.file.FileCloudinaryService;
 import com.example.Mini.product.productDTO.requset.CreateProductRequest;
-import com.example.Mini.product.productDTO.requset.UpdateProductRequest;
 import com.example.Mini.product.productDTO.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,90 +13,41 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-    private final FileCloudinaryService fileCloudinaryService;
 
+    //Create product
     public ProductResponse createProduct(CreateProductRequest createProductRequest) throws IOException {
 
         Product product = new Product();
 
-        product.setProductName(createProductRequest.getProductName());
+        product.setName(createProductRequest.getName());
         product.setPrice(createProductRequest.getPrice());
         product.setQuantity(createProductRequest.getQuantity());
-
-        String urlImage = fileCloudinaryService.uploadFile(createProductRequest.getFile(), createProductRequest.getFolder());
-        product.setImageUrl(urlImage);
+        product.setImageURL(createProductRequest.getImageURL());
         productRepository.save(product);
 
         ProductResponse productResponse = new ProductResponse();
 
         productResponse.setId(product.getId());
-        productResponse.setProductName(product.getProductName());
+        productResponse.setName(product.getName());
         productResponse.setPrice(product.getPrice());
         productResponse.setQuantity(product.getQuantity());
-        productResponse.setImageUrl(product.getImageUrl());
+        productResponse.setImageURL(product.getImageURL());
 
         return productResponse;
     }
-
-    public ProductResponse updateProduct(UpdateProductRequest updateProductRequest) throws IOException {
-
-        Product productId = productRepository.findById(updateProductRequest.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        productId.setProductName(updateProductRequest.getProductName());
-        productId.setPrice(updateProductRequest.getPrice());
-        productId.setQuantity(updateProductRequest.getQuantity());
-        String urlImage = fileCloudinaryService.uploadFile(updateProductRequest.getFile(), updateProductRequest.getFolder());
-        productId.setImageUrl(urlImage);
-
-        productRepository.save(productId);
-
-        ProductResponse productResponse = new ProductResponse();
-
-        productResponse.setId(productId.getId());
-        productResponse.setProductName(productId.getProductName());
-        productResponse.setPrice(productId.getPrice());
-        productResponse.setQuantity(productId.getQuantity());
-        productResponse.setImageUrl(productId.getImageUrl());
-
-        return productResponse;
-    }
-
-    public ProductResponse getProductById(Integer id) throws IOException {
-
-        Product productId = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setId(productId.getId());
-        productResponse.setProductName(productId.getProductName());
-        productResponse.setPrice(productId.getPrice());
-        productResponse.setQuantity(productId.getQuantity());
-        productResponse.setImageUrl(productId.getImageUrl());
-
-        return productResponse;
-    }
-
+    //Get list products
     public List<ProductResponse> getAllProducts() throws IOException {
         var products = productRepository.findAll();
         List<ProductResponse> productResponses = new ArrayList<>();
         for (var product : products) {
             ProductResponse productResponse = new ProductResponse();
             productResponse.setId(product.getId());
-            productResponse.setProductName(product.getProductName());
+            productResponse.setName(product.getName());
             productResponse.setPrice(product.getPrice());
             productResponse.setQuantity(product.getQuantity());
-            productResponse.setImageUrl(product.getImageUrl());
+            productResponse.setImageURL(product.getImageURL());
             productResponses.add(productResponse);
         }
         return productResponses;
-    }
-
-    public String deleteProductById(Integer id) throws IOException {
-        var productId = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        productRepository.delete(productId);
-
-        return "Product deleted";
     }
 }
