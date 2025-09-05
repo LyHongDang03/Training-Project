@@ -1,45 +1,30 @@
 package com.example.Mini.controller;
 
 import com.example.Mini.request.CreateProductRequest;
-import com.example.Mini.request.UpdateProductRequest;
+import com.example.Mini.response.GetListProductsResponse;
 import com.example.Mini.response.ProductResponse;
 import com.example.Mini.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
-    private  final ProductService productService;
+    private final ProductService productService;
 
-    @PostMapping("/add")
-    public ResponseEntity<ProductResponse> createProduct(@ModelAttribute CreateProductRequest request) throws IOException {
+    @PostMapping()
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody CreateProductRequest request) {
         var result = productService.createProduct(request);
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/findAll")
-    public ResponseEntity<List<ProductResponse>> findAll() throws IOException {
+    @GetMapping()
+    public ResponseEntity<List<GetListProductsResponse>> findAll() {
         var result = productService.getAllProducts();
         return ResponseEntity.ok().body(result);
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable Integer id) throws IOException {
-        var result = productService.getProductById(id);
-        return ResponseEntity.ok().body(result);
-    }
-    @PutMapping("/update")
-    public ResponseEntity<ProductResponse> updateProduct(@ModelAttribute UpdateProductRequest request) throws IOException {
-        var result = productService.updateProduct(request);
-        return ResponseEntity.ok().body(result);
-    }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Integer id) throws IOException {
-        return ResponseEntity.ok().body(productService.deleteProductById(id));
     }
 }

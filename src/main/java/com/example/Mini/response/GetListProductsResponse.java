@@ -1,16 +1,16 @@
-package com.example.Mini.request;
+package com.example.Mini.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateProductRequest {
+public class GetListProductsResponse {
+    private Integer id;
     private String name;
     private Long price;
     private Long quantity;

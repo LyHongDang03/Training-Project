@@ -1,5 +1,6 @@
 package com.example.Mini.entity;
 
+import com.example.Mini.statusEnum.StatusEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class Oder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer userId;
-    private String status;
+    private StatusEnum status;
     private String data;
     private LocalDateTime date;
 }

@@ -11,8 +11,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProductResponse {
     private Integer id;
-    private String productName;
-    private Long price;
-    private Long quantity;
-    private String imageUrl;
 }

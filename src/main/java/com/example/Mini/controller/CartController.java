@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CartController {
     private final CartItemService cartItemService;
-    @PostMapping("add/{userId}/{productId}")
+    @PostMapping("/add/{userId}/{productId}")
     public ResponseEntity<String> add(@PathVariable Integer userId,
                                       @PathVariable Integer productId,
                                       @RequestParam Integer quantity) {
