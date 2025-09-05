@@ -1,12 +1,10 @@
-package com.example.Mini.product;
+package com.example.Mini.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -18,8 +16,8 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String productName;
+    private String name;
     private Long price;
     private Long quantity;
-    private String imageUrl;
+    private String imageURL;
 }
