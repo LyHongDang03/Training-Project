@@ -10,4 +10,3 @@ public interface ProductService {
     ProductResponse createProduct(CreateProductRequest createProductRequest);
     List<GetListProductsResponse> getListProducts();
 }
-//

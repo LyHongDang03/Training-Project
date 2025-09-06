@@ -12,4 +12,3 @@ import lombok.Setter;
 public class ProductResponse {
     private Integer id;
 }
-//

@@ -21,4 +21,3 @@ public class Product {
     private Long quantity;
     private String imageURL;
 }
-//
