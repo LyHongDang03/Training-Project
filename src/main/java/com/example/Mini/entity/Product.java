@@ -1,4 +1,4 @@
-package com.example.Mini.Entity;
+package com.example.Mini.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,8 +16,8 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+    private String productName;
     private Long price;
     private Long quantity;
-    private String imageURL;
+    private String imageUrl;
 }

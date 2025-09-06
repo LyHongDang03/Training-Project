@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponse {
-    private Integer id;
+public class OderItemResponse {
+    private Integer productId;
+    private Integer quantity;
+    private Long price;
 }
