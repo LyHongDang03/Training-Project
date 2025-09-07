@@ -1,6 +1,6 @@
 package com.example.Mini.service.impl;
 
-import com.example.Mini.Entity.Product;
+import com.example.Mini.entity.Product;
 import com.example.Mini.repository.ProductRepository;
 import com.example.Mini.request.CreateProductRequest;
 import com.example.Mini.response.ProductResponse;
