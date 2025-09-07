@@ -17,6 +17,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
+    //Create product
     @Override
     public ProductResponse createProduct(CreateProductRequest createProductRequest) {
 
@@ -34,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
 
         return productResponse;
     }
-
     @Override
     public List<GetListProductsResponse> getAllProducts(){
         var products = productRepository.findAll();
