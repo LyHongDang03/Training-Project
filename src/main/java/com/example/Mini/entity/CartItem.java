@@ -17,7 +17,7 @@ import lombok.Setter;
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private Integer userId;
     private Integer productId;
     private Integer quantity;

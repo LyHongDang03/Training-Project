@@ -1,11 +1,12 @@
 package com.example.Mini.service.impl;
 
 import com.example.Mini.entity.CartItem;
-import com.example.Mini.entity.Oder;
+import com.example.Mini.entity.Order;
 import com.example.Mini.entity.Product;
 import com.example.Mini.repository.CartItemRepository;
 import com.example.Mini.repository.OderRepository;
 import com.example.Mini.repository.ProductRepository;
+import com.example.Mini.request.OrderRequest;
 import com.example.Mini.response.OderItemResponse;
 import com.example.Mini.response.OderResponse;
 import com.example.Mini.service.OderService;
@@ -27,10 +28,22 @@ public class OderServiceImpl implements OderService {
     private final OderRepository oderRepository;
 
     @Override
-    public OderResponse checkout(Integer userId, long discount) throws JsonProcessingException {
-        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+    public OderResponse checkout(OrderRequest request) throws JsonProcessingException {
+//      List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        List<CartItem> cartItems = cartItemRepository.findAllById(request.getCartItemId());
+
         if (cartItems.isEmpty()){
-            throw new RuntimeException("CartItem is empty");
+            throw new RuntimeException("User No item " + request.getCartItemId() + " in cart ");
+        }
+        boolean valid = true;
+        for (CartItem cartItem : cartItems) {
+            if (!cartItem.getUserId().equals(request.getUserId())) {
+                valid = false;
+                break;
+            }
+        }
+        if (!valid){
+            throw new RuntimeException("CartItem does not belong to this user");
         }
         List<OderItemResponse> listOderItemResponses = new ArrayList<>();
         long total = 0;
@@ -52,19 +65,19 @@ public class OderServiceImpl implements OderService {
                 productRepository.save(product);
             }
         }
-        Long totalAmount = total - discount;
+        Long totalAmount = total - request.getDiscount();
         OderResponse orderResponse = new OderResponse();
         orderResponse.setTotalAmount(totalAmount);
-        orderResponse.setDiscount(discount);
+        orderResponse.setDiscount(request.getDiscount());
         orderResponse.setItems(listOderItemResponses);
-        Oder oder = new Oder();
-        oder.setUserId(userId);
-        oder.setDate(LocalDateTime.now());
-        oder.setData(
-                new ObjectMapper().writeValueAsString(orderResponse)
-        );
-        oder.setStatus(StatusEnum.SUCCESS);
-        oderRepository.save(oder);
+            Order order = new Order();
+            order.setUserId(request.getUserId());
+            order.setDate(LocalDateTime.now());
+            order.setData(
+                    new ObjectMapper().writeValueAsString(orderResponse)
+            );
+            order.setStatus(StatusEnum.SUCCESS);
+            oderRepository.save(order);
         cartItemRepository.deleteAll(cartItems);
         return orderResponse;
     }
