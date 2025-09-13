@@ -1,0 +1,17 @@
+package com.example.Mini.dto.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class GetCartInfoResponse {
+    private List<CartItemResponse> cartItemResponses;
+    private Long totalAmount;
+}
