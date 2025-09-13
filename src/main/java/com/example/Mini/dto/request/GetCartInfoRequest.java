@@ -1,4 +1,4 @@
-package com.example.Mini.response;
+package com.example.Mini.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OderItemResponse {
-    private Integer productId;
-    private Integer quantity;
-    private Long price;
+public class GetCartInfoRequest {
+    private Integer userId;
 }

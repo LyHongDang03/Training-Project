@@ -2,12 +2,14 @@ package com.example.Mini.service.impl;
 
 import com.example.Mini.entity.CartItem;
 import com.example.Mini.entity.Product;
+import com.example.Mini.exception.AppException;
+import com.example.Mini.exception.ErrorCode;
 import com.example.Mini.repository.CartItemRepository;
 import com.example.Mini.repository.ProductRepository;
-import com.example.Mini.request.AddToCartRequest;
-import com.example.Mini.request.GetCartInfoRequest;
-import com.example.Mini.response.CartItemResponse;
-import com.example.Mini.response.GetCartInfoResponse;
+import com.example.Mini.dto.request.AddToCartRequest;
+import com.example.Mini.dto.request.GetCartInfoRequest;
+import com.example.Mini.dto.response.CartItemResponse;
+import com.example.Mini.dto.response.GetCartInfoResponse;
 import com.example.Mini.service.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,9 +26,9 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public String addToCart(AddToCartRequest request, Integer productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
         if (request.getQuantity() > product.getQuantity()) {
-            throw new RuntimeException("Out of stock. Only left: " + product.getQuantity());
+            throw new AppException(ErrorCode.OUT_OF_STOCK);
         }
         var item = cartItemRepository.findByUserIdAndProductId(request.getUserId(), productId);
         if (item.isPresent()) {
@@ -51,7 +53,7 @@ public class CartItemServiceImpl implements CartItemService {
         long totalAmount = 0;
         for (CartItem cartItem : cartInfo) {
             Product product = productRepository.findById(cartItem.getProductId())
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
+                    .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
             CartItemResponse cartItemResponse = new CartItemResponse();
             cartItemResponse.setProductId(product.getId());
             cartItemResponse.setProductName(product.getName());

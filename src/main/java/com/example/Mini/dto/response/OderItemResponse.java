@@ -1,4 +1,4 @@
-package com.example.Mini.response;
+package com.example.Mini.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetListProductsResponse {
-    private Integer id;
-    private String name;
+public class OderItemResponse {
+    private Integer productId;
+    private Integer quantity;
     private Long price;
-    private Long quantity;
-    private String imageURL;
 }

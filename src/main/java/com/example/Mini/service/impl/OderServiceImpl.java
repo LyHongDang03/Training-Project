@@ -3,12 +3,14 @@ package com.example.Mini.service.impl;
 import com.example.Mini.entity.CartItem;
 import com.example.Mini.entity.Order;
 import com.example.Mini.entity.Product;
+import com.example.Mini.exception.AppException;
+import com.example.Mini.exception.ErrorCode;
 import com.example.Mini.repository.CartItemRepository;
 import com.example.Mini.repository.OderRepository;
 import com.example.Mini.repository.ProductRepository;
-import com.example.Mini.request.OrderRequest;
-import com.example.Mini.response.OderItemResponse;
-import com.example.Mini.response.OderResponse;
+import com.example.Mini.dto.request.OrderRequest;
+import com.example.Mini.dto.response.OderItemResponse;
+import com.example.Mini.dto.response.OderResponse;
 import com.example.Mini.service.OderService;
 import com.example.Mini.statusEnum.StatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,7 +35,7 @@ public class OderServiceImpl implements OderService {
         List<CartItem> cartItems = cartItemRepository.findAllById(request.getCartItemId());
 
         if (cartItems.isEmpty()){
-            throw new RuntimeException("User No item " + request.getCartItemId() + " in cart ");
+            throw new AppException(ErrorCode.CART_EMPTY);
         }
         boolean valid = true;
         for (CartItem cartItem : cartItems) {
@@ -43,15 +45,15 @@ public class OderServiceImpl implements OderService {
             }
         }
         if (!valid){
-            throw new RuntimeException("CartItem does not belong to this user");
+            throw new AppException(ErrorCode.CART_ITEM_NOT_BELONG_TO_USER);
         }
         List<OderItemResponse> listOderItemResponses = new ArrayList<>();
         long total = 0;
         for (CartItem cartItem : cartItems) {
             Product product = productRepository.findById(cartItem.getProductId())
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
+                    .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
             if (product.getQuantity() < cartItem.getQuantity()){
-                throw new RuntimeException("Insufficient quantity for product " + cartItem.getProductId());
+                throw new AppException(ErrorCode.OUT_OF_STOCK);
             }
             else {
                 OderItemResponse oderItemResponse = new OderItemResponse();
@@ -65,8 +67,15 @@ public class OderServiceImpl implements OderService {
                 productRepository.save(product);
             }
         }
-        Long totalAmount = total - request.getDiscount();
+        long totalAmount = total - request.getDiscount();
         OderResponse orderResponse = new OderResponse();
+        if (request.getDiscount() > total){
+            totalAmount = 0L;
+            orderResponse.setTotalAmount(totalAmount);
+        }
+        if (request.getDiscount() < 0){
+            throw new AppException(ErrorCode.DISCOUNT_INVALID);
+        }
         orderResponse.setTotalAmount(totalAmount);
         orderResponse.setDiscount(request.getDiscount());
         orderResponse.setItems(listOderItemResponses);

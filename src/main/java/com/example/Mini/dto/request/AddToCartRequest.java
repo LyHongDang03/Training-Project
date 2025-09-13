@@ -1,19 +1,15 @@
-package com.example.Mini.request;
+package com.example.Mini.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderRequest {
+public class AddToCartRequest {
     private Integer userId;
-    private Long discount;
-    private List<Integer> cartItemId;
-
+    private Integer quantity;
 }

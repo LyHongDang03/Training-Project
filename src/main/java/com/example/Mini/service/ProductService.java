@@ -1,8 +1,8 @@
 package com.example.Mini.service;
 
-import com.example.Mini.request.CreateProductRequest;
-import com.example.Mini.response.GetListProductsResponse;
-import com.example.Mini.response.ProductResponse;
+import com.example.Mini.dto.request.CreateProductRequest;
+import com.example.Mini.dto.response.GetListProductsResponse;
+import com.example.Mini.dto.response.ProductResponse;
 
 import java.util.List;
 

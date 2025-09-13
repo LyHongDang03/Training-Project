@@ -1,4 +1,4 @@
-package com.example.Mini.request;
+package com.example.Mini.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
